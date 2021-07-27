@@ -1,0 +1,572 @@
+Index: src/main/java/com/ibm/checkin/config/DisciplineConfig.java
+===================================================================
+diff --git a/src/main/java/com/ibm/checkin/config/DisciplineConfig.java b/src/main/java/com/ibm/checkin/config/DisciplineConfig.java
+new file mode 100644
+--- /dev/null	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
++++ b/src/main/java/com/ibm/checkin/config/DisciplineConfig.java	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
+@@ -0,0 +1,38 @@
++package com.ibm.checkin.config;
++
++import com.ibm.checkin.entity.Discipline;
++import com.ibm.checkin.repository.DisciplineRepository;
++import org.springframework.boot.CommandLineRunner;
++import org.springframework.context.annotation.Bean;
++import org.springframework.context.annotation.Configuration;
++
++import java.util.List;
++
++@Configuration
++public class DisciplineConfig {
++
++    @Bean
++    CommandLineRunner commandLineRunner(DisciplineRepository repository){
++        return args -> {
++            Discipline programming =  new Discipline(
++                    "programming",
++                    "FMI",
++                    "IE",
++                    2,
++                    1,
++                    5
++            );
++
++            Discipline database =  new Discipline(
++                    "database",
++                    "FMI",
++                    "IE",
++                    2,
++                    1,
++                    4
++            );
++
++            repository.saveAll(List.of(programming, database));
++        };
++    }
++}
+Index: src/main/java/com/ibm/checkin/controller/ClassroomController.java
+===================================================================
+diff --git a/src/main/java/com/ibm/checkin/controller/ClassroomController.java b/src/main/java/com/ibm/checkin/controller/ClassroomController.java
+new file mode 100644
+--- /dev/null	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
++++ b/src/main/java/com/ibm/checkin/controller/ClassroomController.java	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
+@@ -0,0 +1,27 @@
++package com.ibm.checkin.controller;
++
++import com.ibm.checkin.entity.Classroom;
++import com.ibm.checkin.service.ClassroomService;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.web.bind.annotation.GetMapping;
++import org.springframework.web.bind.annotation.RequestMapping;
++import org.springframework.web.bind.annotation.RestController;
++
++import java.util.List;
++
++@RestController
++@RequestMapping(path = "api/classrooms")
++public class ClassroomController {
++
++    private final ClassroomService classroomService;
++
++    @Autowired
++    public ClassroomController(ClassroomService classroomService) {
++        this.classroomService = classroomService;
++    }
++
++    @GetMapping
++    public List<Classroom> getClassrooms(){
++        return classroomService.getClassrooms();
++    }
++}
+Index: src/main/java/com/ibm/checkin/controller/DisciplineController.java
+===================================================================
+diff --git a/src/main/java/com/ibm/checkin/controller/DisciplineController.java b/src/main/java/com/ibm/checkin/controller/DisciplineController.java
+new file mode 100644
+--- /dev/null	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
++++ b/src/main/java/com/ibm/checkin/controller/DisciplineController.java	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
+@@ -0,0 +1,27 @@
++package com.ibm.checkin.controller;
++
++import com.ibm.checkin.entity.Discipline;
++import com.ibm.checkin.service.DisciplineService;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.web.bind.annotation.GetMapping;
++import org.springframework.web.bind.annotation.RequestMapping;
++import org.springframework.web.bind.annotation.RestController;
++
++import java.util.List;
++
++@RestController
++@RequestMapping(path = "api/disciplines")
++public class DisciplineController {
++
++    private final DisciplineService disciplineService;
++
++    @Autowired
++    public DisciplineController(DisciplineService disciplineService) {
++        this.disciplineService = disciplineService;
++    }
++
++    @GetMapping
++    public List<Discipline> getDisciplines(){
++        return disciplineService.getDisciplines();
++    }
++}
+Index: src/main/java/com/ibm/checkin/controller/ScheduleController.java
+===================================================================
+diff --git a/src/main/java/com/ibm/checkin/controller/ScheduleController.java b/src/main/java/com/ibm/checkin/controller/ScheduleController.java
+new file mode 100644
+--- /dev/null	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
++++ b/src/main/java/com/ibm/checkin/controller/ScheduleController.java	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
+@@ -0,0 +1,26 @@
++package com.ibm.checkin.controller;
++
++import com.ibm.checkin.entity.Schedule;
++import com.ibm.checkin.service.ScheduleService;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.web.bind.annotation.GetMapping;
++import org.springframework.web.bind.annotation.RequestMapping;
++import org.springframework.web.bind.annotation.RestController;
++
++import java.util.List;
++
++@RestController
++@RequestMapping(path = "api/schedule")
++public class ScheduleController {
++    private final ScheduleService scheduleService;
++
++    @Autowired
++    public ScheduleController(ScheduleService scheduleService) {
++        this.scheduleService = scheduleService;
++    }
++
++    @GetMapping
++    public List<Schedule> getSchedule(){
++        return scheduleService.getSchedule();
++    }
++}
+Index: src/main/java/com/ibm/checkin/controller/UserController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ibm/checkin/controller/UserController.java b/src/main/java/com/ibm/checkin/controller/UserController.java
+--- a/src/main/java/com/ibm/checkin/controller/UserController.java	(revision 263c9fbc4de89602129954135283b19db0306d4a)
++++ b/src/main/java/com/ibm/checkin/controller/UserController.java	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
+@@ -9,7 +9,7 @@
+ import java.util.List;
+ 
+ @RestController
+-@RequestMapping(path = "api/user")
++@RequestMapping(path = "api/users")
+ public class UserController {
+ 
+     private final UserService userService;
+Index: src/main/java/com/ibm/checkin/entity/Classroom.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ibm/checkin/entity/Classroom.java b/src/main/java/com/ibm/checkin/entity/Classroom.java
+--- a/src/main/java/com/ibm/checkin/entity/Classroom.java	(revision 263c9fbc4de89602129954135283b19db0306d4a)
++++ b/src/main/java/com/ibm/checkin/entity/Classroom.java	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
+@@ -1,6 +1,67 @@
+ package com.ibm.checkin.entity;
+ 
+-import javax.persistence.Entity;
++import javax.persistence.*;
+ 
++@Table(name = "classrooms")
++@Entity
+ public class Classroom {
++    @Id
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
++    private Long id;
++    @Column(nullable = false)
++    private Long discipline_id;
++    @Column(nullable = false)
++    private String location;
++    @Column(nullable = false)
++    private int capacity;
++
++    public Classroom() {
++    }
++
++    public Classroom(String location, int capacity) {
++        this.location = location;
++        this.capacity = capacity;
++    }
++
++    public Long getId() {
++        return id;
++    }
++
++    public void setId(Long id) {
++        this.id = id;
++    }
++
++    public Long getDiscipline_id() {
++        return discipline_id;
++    }
++
++    public void setDiscipline_id(Long discipline_id) {
++        this.discipline_id = discipline_id;
++    }
++
++    public String getLocation() {
++        return location;
++    }
++
++    public void setLocation(String location) {
++        this.location = location;
++    }
++
++    public int getCapacity() {
++        return capacity;
++    }
++
++    public void setCapacity(int capacity) {
++        this.capacity = capacity;
++    }
++
++    @Override
++    public String toString() {
++        return "Classroom{" +
++                "id=" + id +
++                ", discipline_id=" + discipline_id +
++                ", location='" + location + '\'' +
++                ", capacity=" + capacity +
++                '}';
++    }
+ }
+Index: src/main/java/com/ibm/checkin/entity/Discipline.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ibm/checkin/entity/Discipline.java b/src/main/java/com/ibm/checkin/entity/Discipline.java
+--- a/src/main/java/com/ibm/checkin/entity/Discipline.java	(revision 263c9fbc4de89602129954135283b19db0306d4a)
++++ b/src/main/java/com/ibm/checkin/entity/Discipline.java	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
+@@ -1,6 +1,115 @@
+ package com.ibm.checkin.entity;
+ 
+-import javax.persistence.Entity;
++import javax.persistence.*;
+ 
++@Table(name = "disciplines")
++@Entity
+ public class Discipline {
++    @Id
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
++    private Long id;
++    @Column(nullable = false)
++    private String name;
++    @Column(nullable = false)
++    private Long teacher_id;
++    @Column(nullable = false)
++    private String faculty;
++    @Column(nullable = false)
++    private String section;
++    @Column(nullable = false)
++    private int year;
++    @Column(nullable = false)
++    private int semester;
++    @Column(nullable = false)
++    private int credits;
++
++    public Discipline() {
++    }
++
++    public Discipline(String name, String faculty, String section, int year, int semester, int credits) {
++        this.name = name;
++        this.faculty = faculty;
++        this.section = section;
++        this.year = year;
++        this.semester = semester;
++        this.credits = credits;
++    }
++
++    public Long getId() {
++        return id;
++    }
++
++    public void setId(Long id) {
++        this.id = id;
++    }
++
++    public String getName() {
++        return name;
++    }
++
++    public void setName(String name) {
++        this.name = name;
++    }
++
++    public Long getTeacher_id() {
++        return teacher_id;
++    }
++
++    public void setTeacher_id(Long teacher_id) {
++        this.teacher_id = teacher_id;
++    }
++
++    public String getFaculty() {
++        return faculty;
++    }
++
++    public void setFaculty(String faculty) {
++        this.faculty = faculty;
++    }
++
++    public String getSection() {
++        return section;
++    }
++
++    public void setSection(String section) {
++        this.section = section;
++    }
++
++    public int getYear() {
++        return year;
++    }
++
++    public void setYear(int year) {
++        this.year = year;
++    }
++
++    public int getSemester() {
++        return semester;
++    }
++
++    public void setSemester(int semester) {
++        this.semester = semester;
++    }
++
++    public int getCredits() {
++        return credits;
++    }
++
++    public void setCredits(int credits) {
++        this.credits = credits;
++    }
++
++    @Override
++    public String toString() {
++        return "Discipline{" +
++                "id=" + id +
++                ", name='" + name + '\'' +
++                ", teacher_id=" + teacher_id +
++                ", faculty='" + faculty + '\'' +
++                ", section='" + section + '\'' +
++                ", year=" + year +
++                ", semester=" + semester +
++                ", credits=" + credits +
++                '}';
++    }
+ }
+Index: src/main/java/com/ibm/checkin/entity/Schedule.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ibm/checkin/entity/Schedule.java b/src/main/java/com/ibm/checkin/entity/Schedule.java
+--- a/src/main/java/com/ibm/checkin/entity/Schedule.java	(revision 263c9fbc4de89602129954135283b19db0306d4a)
++++ b/src/main/java/com/ibm/checkin/entity/Schedule.java	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
+@@ -1,7 +1,51 @@
+ package com.ibm.checkin.entity;
+ 
+ import javax.persistence.Entity;
++import javax.persistence.Id;
++import javax.persistence.Table;
++import java.util.Date;
+ 
++@Table(name = "schedule")
++@Entity
+ public class Schedule {
++    @Id
++    private Long discipline_id;
++    private Date start_time;
++    private Date end_time;
++
++    public Schedule() {
++    }
++
++    public Long getDiscipline_id() {
++        return discipline_id;
++    }
++
++    public void setDiscipline_id(Long discipline_id) {
++        this.discipline_id = discipline_id;
++    }
+ 
++    public Date getStart_time() {
++        return start_time;
++    }
++
++    public void setStart_time(Date start_time) {
++        this.start_time = start_time;
++    }
++
++    public Date getEnd_time() {
++        return end_time;
++    }
++
++    public void setEnd_time(Date end_time) {
++        this.end_time = end_time;
++    }
++
++    @Override
++    public String toString() {
++        return "Schedule{" +
++                "discipline_id=" + discipline_id +
++                ", start_time=" + start_time +
++                ", end_time=" + end_time +
++                '}';
++    }
+ }
+Index: src/main/java/com/ibm/checkin/repository/ClassroomRepository.java
+===================================================================
+diff --git a/src/main/java/com/ibm/checkin/repository/ClassroomRepository.java b/src/main/java/com/ibm/checkin/repository/ClassroomRepository.java
+new file mode 100644
+--- /dev/null	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
++++ b/src/main/java/com/ibm/checkin/repository/ClassroomRepository.java	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
+@@ -0,0 +1,7 @@
++package com.ibm.checkin.repository;
++
++import com.ibm.checkin.entity.Classroom;
++import org.springframework.data.jpa.repository.JpaRepository;
++
++public interface ClassroomRepository  extends JpaRepository<Classroom,Long> {
++}
+Index: src/main/java/com/ibm/checkin/repository/DisciplineRepository.java
+===================================================================
+diff --git a/src/main/java/com/ibm/checkin/repository/DisciplineRepository.java b/src/main/java/com/ibm/checkin/repository/DisciplineRepository.java
+new file mode 100644
+--- /dev/null	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
++++ b/src/main/java/com/ibm/checkin/repository/DisciplineRepository.java	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
+@@ -0,0 +1,7 @@
++package com.ibm.checkin.repository;
++
++import com.ibm.checkin.entity.Discipline;
++import org.springframework.data.jpa.repository.JpaRepository;
++
++public interface DisciplineRepository extends JpaRepository<Discipline, Long> {
++}
+Index: src/main/java/com/ibm/checkin/repository/ScheduleRepository.java
+===================================================================
+diff --git a/src/main/java/com/ibm/checkin/repository/ScheduleRepository.java b/src/main/java/com/ibm/checkin/repository/ScheduleRepository.java
+new file mode 100644
+--- /dev/null	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
++++ b/src/main/java/com/ibm/checkin/repository/ScheduleRepository.java	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
+@@ -0,0 +1,7 @@
++package com.ibm.checkin.repository;
++
++import com.ibm.checkin.entity.Schedule;
++import org.springframework.data.jpa.repository.JpaRepository;
++
++public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
++}
+Index: src/main/java/com/ibm/checkin/service/ClassroomService.java
+===================================================================
+diff --git a/src/main/java/com/ibm/checkin/service/ClassroomService.java b/src/main/java/com/ibm/checkin/service/ClassroomService.java
+new file mode 100644
+--- /dev/null	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
++++ b/src/main/java/com/ibm/checkin/service/ClassroomService.java	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
+@@ -0,0 +1,22 @@
++package com.ibm.checkin.service;
++
++import com.ibm.checkin.entity.Classroom;
++import com.ibm.checkin.repository.ClassroomRepository;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.stereotype.Service;
++
++import java.util.List;
++
++@Service
++public class ClassroomService {
++    private final ClassroomRepository classroomRepository;
++
++    @Autowired
++    public ClassroomService(ClassroomRepository classroomRepository) {
++        this.classroomRepository = classroomRepository;
++    }
++
++    public List<Classroom> getClassrooms(){
++        return classroomRepository.findAll();
++    }
++}
+Index: src/main/java/com/ibm/checkin/service/DisciplineService.java
+===================================================================
+diff --git a/src/main/java/com/ibm/checkin/service/DisciplineService.java b/src/main/java/com/ibm/checkin/service/DisciplineService.java
+new file mode 100644
+--- /dev/null	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
++++ b/src/main/java/com/ibm/checkin/service/DisciplineService.java	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
+@@ -0,0 +1,23 @@
++package com.ibm.checkin.service;
++
++import com.ibm.checkin.entity.Discipline;
++import com.ibm.checkin.repository.DisciplineRepository;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.stereotype.Service;
++
++import java.util.List;
++
++@Service
++public class DisciplineService {
++
++    private final DisciplineRepository disciplineRepository;
++
++    @Autowired
++    public DisciplineService(DisciplineRepository disciplineRepository) {
++        this.disciplineRepository = disciplineRepository;
++    }
++
++    public List<Discipline> getDisciplines(){
++        return disciplineRepository.findAll();
++    }
++}
+Index: src/main/java/com/ibm/checkin/service/ScheduleService.java
+===================================================================
+diff --git a/src/main/java/com/ibm/checkin/service/ScheduleService.java b/src/main/java/com/ibm/checkin/service/ScheduleService.java
+new file mode 100644
+--- /dev/null	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
++++ b/src/main/java/com/ibm/checkin/service/ScheduleService.java	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
+@@ -0,0 +1,22 @@
++package com.ibm.checkin.service;
++
++import com.ibm.checkin.entity.Schedule;
++import com.ibm.checkin.repository.ScheduleRepository;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.stereotype.Service;
++
++import java.util.List;
++
++@Service
++public class ScheduleService {
++    private final ScheduleRepository scheduleRepository;
++
++    @Autowired
++    public ScheduleService(ScheduleRepository scheduleRepository) {
++        this.scheduleRepository = scheduleRepository;
++    }
++
++    public List<Schedule> getSchedule(){
++        return scheduleRepository.findAll();
++    }
++}
+Index: src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/application.properties b/src/main/resources/application.properties
+--- a/src/main/resources/application.properties	(revision 263c9fbc4de89602129954135283b19db0306d4a)
++++ b/src/main/resources/application.properties	(revision fbfa97d71907a3e7b98c472f030f91ec98c8f603)
+@@ -10,4 +10,5 @@
+ spring.jpa.hibernate.ddl-auto=update
+ spring.jpa.show-sql=true
+ 
+-server.error.include-message=always
+\ No newline at end of file
++server.error.include-message=always
++spring.main.allow-bean-definition-overriding=true
+\ No newline at end of file
