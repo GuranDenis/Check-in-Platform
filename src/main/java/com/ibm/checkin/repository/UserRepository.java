@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findUsersByRole(Role role);
-    User findUsersById(Long id);
+    User findUserById(Long id);
 }

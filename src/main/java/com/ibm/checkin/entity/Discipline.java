@@ -10,7 +10,7 @@ public class Discipline {
     private Long id;
     @Column(nullable = false)
     private String name;
-    @Column(nullable = false)
+    @Column
     private Long teacher_id;
     @Column(nullable = false)
     private String faculty;

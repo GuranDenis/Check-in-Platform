@@ -32,13 +32,13 @@ public class UserService {
 
     public User findByID(Long id) {
         if(!userRepository.existsById(id))
-            throw new IllegalStateException("User with id " + id + " doesn't exist.");
-        return userRepository.findUsersById(id);
+            throw new IllegalStateException("User with id " + id + " doesn't exist");
+        return userRepository.findUserById(id);
     }
 
     public void deleteUser(Long id) {
         if(!userRepository.existsById(id))
-            throw new IllegalStateException("User with id " + id + " doesn't exist.");
+            throw new IllegalStateException("User with id " + id + " doesn't exist");
         userRepository.deleteById(id);
     }
 }

@@ -8,17 +8,17 @@ public class Classroom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
+    @Column
     private Long discipline_id;
     @Column(nullable = false)
-    private String location;
+    private int location;
     @Column(nullable = false)
     private int capacity;
 
     public Classroom() {
     }
 
-    public Classroom(String location, int capacity) {
+    public Classroom(int location, int capacity) {
         this.location = location;
         this.capacity = capacity;
     }
@@ -39,11 +39,11 @@ public class Classroom {
         this.discipline_id = discipline_id;
     }
 
-    public String getLocation() {
+    public int getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(int location) {
         this.location = location;
     }
 

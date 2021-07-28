@@ -1,15 +1,18 @@
 package com.ibm.checkin.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ibm.checkin.entity.Role;
 import com.ibm.checkin.entity.User;
 import com.ibm.checkin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/users")
+@RequestMapping(path = "api/user")
 public class UserController {
 
     private final UserService userService;
@@ -19,7 +22,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<User> getUsers(){
         return userService.getUsers();
     }
@@ -34,7 +37,7 @@ public class UserController {
         return userService.findByID(id);
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public void addUser(@RequestBody User user){
         userService.addUser(user);
     }
