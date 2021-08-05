@@ -1,7 +1,9 @@
 package com.ibm.checkin.service;
 
 import com.ibm.checkin.entity.Discipline;
+import com.ibm.checkin.entity.Role;
 import com.ibm.checkin.repository.DisciplineRepository;
+import com.ibm.checkin.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +14,12 @@ public class DisciplineService {
 
     private final DisciplineRepository disciplineRepository;
 
+    private final UserRepository userRepository;
+
     @Autowired
-    public DisciplineService(DisciplineRepository disciplineRepository) {
+    public DisciplineService(DisciplineRepository disciplineRepository, UserRepository userRepository) {
         this.disciplineRepository = disciplineRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Discipline> getDisciplines(){
@@ -40,8 +45,13 @@ public class DisciplineService {
     public void setTeacherId(Long discipline_id, Long teacher_id) {
         if(!disciplineRepository.existsById(discipline_id))
             throw new IllegalStateException("Discipline with id " + discipline_id + " doesn't exist");
+        if(!userRepository.existsById(teacher_id))
+            throw new IllegalStateException("User with id " + teacher_id + " doesn't exist");
+        if(!userRepository.getById(teacher_id).getRole().equals(Role.teacher))
+            throw new IllegalStateException("User with id " + teacher_id + " is not a teacher");
+
         Discipline discipline = disciplineRepository.getById(discipline_id);
-        discipline.setTeacher_id(teacher_id);
+        discipline.setTeacherId(teacher_id);
         disciplineRepository.save(discipline);
     }
 }

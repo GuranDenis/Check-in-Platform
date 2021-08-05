@@ -1,6 +1,7 @@
 package com.ibm.checkin.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Table(name = "classrooms")
 @Entity
@@ -8,12 +9,12 @@ public class Classroom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
-    private Long discipline_id;
     @Column(nullable = false)
     private int location;
     @Column(nullable = false)
     private int capacity;
+    @OneToMany(mappedBy = "classroom")
+    private List<Feature> features;
 
     public Classroom() {
     }
@@ -29,14 +30,6 @@ public class Classroom {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getDiscipline_id() {
-        return discipline_id;
-    }
-
-    public void setDiscipline_id(Long discipline_id) {
-        this.discipline_id = discipline_id;
     }
 
     public int getLocation() {
@@ -55,13 +48,21 @@ public class Classroom {
         this.capacity = capacity;
     }
 
+    public List<Feature> getFeatures() {
+        return features;
+    }
+
+    public void setFeatures(List<Feature> features) {
+        this.features = features;
+    }
+
     @Override
     public String toString() {
         return "Classroom{" +
                 "id=" + id +
-                ", discipline_id=" + discipline_id +
-                ", location='" + location + '\'' +
+                ", location=" + location +
                 ", capacity=" + capacity +
+                ", features=" + features +
                 '}';
     }
 }

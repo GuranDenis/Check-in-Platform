@@ -8,10 +8,10 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
-    private String first_name;
-    @Column(nullable = false)
-    private String last_name;
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
     @Column(nullable = false)
     private Role role;
     @Transient
@@ -28,9 +28,9 @@ public class User {
     public User() {
     }
 
-    public User(String first_name, String last_name, Role role) {
-        this.first_name = first_name;
-        this.last_name = last_name;
+    public User(String firstName, String lastName, Role role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.role = role;
     }
 
@@ -42,20 +42,20 @@ public class User {
         this.id = id;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Role getRole() {
@@ -99,7 +99,7 @@ public class User {
     }
 
     public String getUsername() {
-        return getFirst_name().toLowerCase()+ "." + getLast_name().toLowerCase();
+        return getFirstName().toLowerCase()+ "." + getLastName().toLowerCase();
     }
 
     public void setUsername(String username) {
@@ -110,8 +110,8 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", role=" + role +
                 ", username='" + username + '\'' +
                 ", year=" + year +

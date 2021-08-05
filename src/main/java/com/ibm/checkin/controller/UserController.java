@@ -37,12 +37,12 @@ public class UserController {
         return userService.findByID(id);
     }
 
-    @PostMapping("/add")
+    @PostMapping()
     public void addUser(@RequestBody User user){
         userService.addUser(user);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable("id") Long id){
         userService.deleteUser(id);
     }

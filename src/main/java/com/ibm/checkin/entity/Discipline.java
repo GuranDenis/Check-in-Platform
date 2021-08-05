@@ -1,6 +1,7 @@
 package com.ibm.checkin.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Table(name = "disciplines")
 @Entity
@@ -11,7 +12,7 @@ public class Discipline {
     @Column(nullable = false)
     private String name;
     @Column
-    private Long teacher_id;
+    private Long teacherId;
     @Column(nullable = false)
     private String faculty;
     @Column(nullable = false)
@@ -22,6 +23,8 @@ public class Discipline {
     private int semester;
     @Column(nullable = false)
     private int credits;
+    @OneToMany(mappedBy = "discipline")
+    private List<Schedule> timetable;
 
     public Discipline() {
     }
@@ -51,12 +54,12 @@ public class Discipline {
         this.name = name;
     }
 
-    public Long getTeacher_id() {
-        return teacher_id;
+    public Long getTeacherId() {
+        return teacherId;
     }
 
-    public void setTeacher_id(Long teacher_id) {
-        this.teacher_id = teacher_id;
+    public void setTeacherId(Long teacherId) {
+        this.teacherId = teacherId;
     }
 
     public String getFaculty() {
@@ -99,17 +102,26 @@ public class Discipline {
         this.credits = credits;
     }
 
+    public List<Schedule> getTimetable() {
+        return timetable;
+    }
+
+    public void setTimetable(List<Schedule> timetable) {
+        this.timetable = timetable;
+    }
+
     @Override
     public String toString() {
         return "Discipline{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", teacher_id=" + teacher_id +
+                ", teacherId=" + teacherId +
                 ", faculty='" + faculty + '\'' +
                 ", section='" + section + '\'' +
                 ", year=" + year +
                 ", semester=" + semester +
                 ", credits=" + credits +
+                ", timetable=" + timetable +
                 '}';
     }
 }

@@ -3,10 +3,9 @@ package com.ibm.checkin.controller;
 import com.ibm.checkin.entity.Schedule;
 import com.ibm.checkin.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -22,5 +21,18 @@ public class ScheduleController {
     @GetMapping
     public List<Schedule> getSchedule(){
         return scheduleService.getSchedule();
+    }
+
+    @PostMapping("/discipline/{discipline_id}")
+    public void addSchedule(@RequestBody Schedule schedule,
+                            @PathVariable(name = "discipline_id") Long discipline_id){
+        scheduleService.addSchedule(schedule,discipline_id);
+    }
+
+    @PutMapping("/id/{schedule_id}/discipline/{discipline_id}")
+    public void setDisciplineId(
+            @PathVariable("schedule_id") Long schedule_id,
+            @PathVariable("discipline_id") Long discipline_id){
+        scheduleService.setDisciplineId(schedule_id, discipline_id);
     }
 }

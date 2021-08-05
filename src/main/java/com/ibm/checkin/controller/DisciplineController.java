@@ -38,7 +38,7 @@ public class DisciplineController {
         disciplineService.deleteDiscipline(id);
     }
 
-    @PutMapping("/set/id/{discipline_id}/teacher/{teacher_id}")
+    @PutMapping("/id/{discipline_id}/teacher/{teacher_id}")
     public void setTeacherId(
             @PathVariable("discipline_id") Long discipline_id,
             @PathVariable("teacher_id") Long teacher_id){

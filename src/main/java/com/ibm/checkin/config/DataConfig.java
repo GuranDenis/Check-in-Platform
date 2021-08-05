@@ -1,15 +1,11 @@
 package com.ibm.checkin.config;
 
-import com.ibm.checkin.entity.Classroom;
-import com.ibm.checkin.entity.Discipline;
-import com.ibm.checkin.entity.Role;
-import com.ibm.checkin.entity.User;
-import com.ibm.checkin.repository.ClassroomRepository;
-import com.ibm.checkin.repository.DisciplineRepository;
-import com.ibm.checkin.repository.UserRepository;
+import com.ibm.checkin.entity.*;
+import com.ibm.checkin.repository.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Configuration
@@ -21,10 +17,16 @@ public class DataConfig {
 
     final ClassroomRepository classroomRepository;
 
-    public DataConfig(DisciplineRepository disciplineRepository, UserRepository userRepository, ClassroomRepository classroomRepository) {
+    final ScheduleRepository scheduleRepository;
+
+    final AllocationRepository allocationRepository;
+
+    public DataConfig(DisciplineRepository disciplineRepository, UserRepository userRepository, ClassroomRepository classroomRepository, ScheduleRepository scheduleRepository, AllocationRepository allocationRepository) {
         this.disciplineRepository = disciplineRepository;
         this.userRepository = userRepository;
         this.classroomRepository = classroomRepository;
+        this.scheduleRepository = scheduleRepository;
+        this.allocationRepository = allocationRepository;
     }
 
     @Bean
@@ -63,6 +65,13 @@ public class DataConfig {
 
         disciplineRepository.saveAll(List.of(programming, database));
 
+        Schedule schedule = new Schedule(
+                LocalDateTime.of(2021,10,13, 12, 0),
+                database
+        );
+
+        scheduleRepository.save(schedule);
+
         Classroom class1 = new Classroom(
                 101,
                 50
@@ -74,5 +83,13 @@ public class DataConfig {
         );
 
         classroomRepository.saveAll(List.of(class1, class2));
+
+        Allocation allocation1 = new Allocation(
+                class1.getId(),
+                database.getId()
+        );
+
+        allocationRepository.save(allocation1);
+
     }
 }

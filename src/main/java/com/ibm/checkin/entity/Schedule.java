@@ -1,51 +1,60 @@
 package com.ibm.checkin.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
-@Table(name = "schedule")
-@Entity
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+
+@Entity(name = "schedule")
 public class Schedule {
     @Id
-    private Long discipline_id;
-    private Date start_time;
-    private Date end_time;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private LocalDateTime time;
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "discipline_id", referencedColumnName = "id")
+    private Discipline discipline;
 
     public Schedule() {
     }
 
-    public Long getDiscipline_id() {
-        return discipline_id;
+    public Schedule(LocalDateTime time, Discipline discipline) {
+        this.time = time;
+        this.discipline = discipline;
     }
 
-    public void setDiscipline_id(Long discipline_id) {
-        this.discipline_id = discipline_id;
+    public LocalDateTime getTime() {
+        return time;
     }
 
-    public Date getStart_time() {
-        return start_time;
+    public void setTime(LocalDateTime time) {
+        this.time = time;
     }
 
-    public void setStart_time(Date start_time) {
-        this.start_time = start_time;
+    public Discipline getDiscipline() {
+        return discipline;
     }
 
-    public Date getEnd_time() {
-        return end_time;
+    public void setDiscipline(Discipline discipline) {
+        this.discipline = discipline;
     }
 
-    public void setEnd_time(Date end_time) {
-        this.end_time = end_time;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
     public String toString() {
         return "Schedule{" +
-                "discipline_id=" + discipline_id +
-                ", start_time=" + start_time +
-                ", end_time=" + end_time +
+                "id=" + id +
+                ", time=" + time +
+                ", discipline=" + discipline +
                 '}';
     }
 }

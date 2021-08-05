@@ -37,11 +37,4 @@ public class ClassroomController {
     public void deleteClassroom(@PathVariable("id") Long id){
         classroomService.deleteClassroom(id);
     }
-
-    @PutMapping("/set/id/{classroom_id}/discipline/{discipline_id}")
-    public void setDisciplineId(
-            @PathVariable("classroom_id") Long classroom_id,
-            @PathVariable("discipline_id") Long discipline_id){
-        classroomService.setDisciplineId(classroom_id, discipline_id);
-    }
 }
