@@ -1,7 +1,8 @@
 package com.ibm.checkin.controller;
 
+import com.ibm.checkin.entity.Classroom;
 import com.ibm.checkin.entity.Feature;
-import com.ibm.checkin.entity.Schedule;
+import com.ibm.checkin.request.FeatureRequest;
 import com.ibm.checkin.service.FeatureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,17 +30,27 @@ public class FeatureController {
         return featureService.getFeaturesByName(name);
     }
 
-    @PostMapping("/classroom/{classroom_id}")
-    public void addSchedule(@RequestBody Feature feature,
-                            @PathVariable(name = "classroom_id") Long classroom_id){
-        featureService.addFeature(feature,classroom_id);
+    @GetMapping("classroom/{classroom_id}")
+    public List<Classroom> getFeaturesByClassroomId(@PathVariable(name = "classroom_id") Long classroomId){
+        return featureService.getFeaturesByClassroomId(classroomId);
+    }
+
+    @PostMapping
+    public void addFeature(@RequestBody FeatureRequest featureRequest){
+        featureService.addFeature(featureRequest);
     }
 
     @PutMapping("/id/{feature_id}/classroom/{classroom_id}")
-    public void setClassroomId(
-            @PathVariable("feature_id") Long feature_id,
-            @PathVariable("classroom_id") Long classroom_id){
-        featureService.setClassroomId(feature_id, classroom_id);
+    public void updateClassroomId(
+            @PathVariable("feature_id") Long featureId,
+            @PathVariable("classroom_id") Long classroomId){
+        featureService.updateClassroomId(featureId, classroomId);
     }
+
+    @DeleteMapping("/id/{feature_id}")
+    public void deleteFeatureById(@PathVariable("feature_id") Long featureId){
+        featureService.deteleFeatureById(featureId);
+    }
+
 
 }

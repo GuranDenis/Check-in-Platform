@@ -28,12 +28,12 @@ public class DisciplineController {
         return disciplineService.findByID(id);
     }
 
-    @PostMapping("/add")
+    @PostMapping(consumes = {"application/json"})
     public void addDiscipline(@RequestBody Discipline discipline){
         disciplineService.addDiscipline(discipline);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteDiscipline(@PathVariable("id") Long id){
         disciplineService.deleteDiscipline(id);
     }

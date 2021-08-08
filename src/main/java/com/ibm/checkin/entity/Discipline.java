@@ -1,5 +1,7 @@
 package com.ibm.checkin.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class Discipline {
     private int semester;
     @Column(nullable = false)
     private int credits;
+    @JsonIgnore
     @OneToMany(mappedBy = "discipline")
     private List<Schedule> timetable;
 

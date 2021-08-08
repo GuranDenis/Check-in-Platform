@@ -1,5 +1,7 @@
 package com.ibm.checkin.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -13,6 +15,10 @@ public class Classroom {
     private int location;
     @Column(nullable = false)
     private int capacity;
+    @JsonIgnore
+    @OneToMany(mappedBy = "classroom")
+    private List<Schedule> scheduleList;
+    @JsonIgnore
     @OneToMany(mappedBy = "classroom")
     private List<Feature> features;
 
@@ -56,12 +62,21 @@ public class Classroom {
         this.features = features;
     }
 
+    public List<Schedule> getScheduleList() {
+        return scheduleList;
+    }
+
+    public void setScheduleList(List<Schedule> scheduleList) {
+        this.scheduleList = scheduleList;
+    }
+
     @Override
     public String toString() {
         return "Classroom{" +
                 "id=" + id +
                 ", location=" + location +
                 ", capacity=" + capacity +
+                ", scheduleList=" + scheduleList +
                 ", features=" + features +
                 '}';
     }

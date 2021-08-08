@@ -33,6 +33,13 @@ public class DisciplineService {
     }
 
     public void addDiscipline(Discipline discipline) {
+
+        for (Discipline disciplineObject: disciplineRepository.getDisciplinesByName(discipline.getName()))
+            if(disciplineObject.getFaculty().equals(discipline.getFaculty()) &&
+                    disciplineObject.getSection().equals(discipline.getSection()) &&
+                        disciplineObject.getSemester() == discipline.getSemester() &&
+                            disciplineObject.getYear() == discipline.getYear())
+                throw new IllegalStateException("Discipline already created with id "+ disciplineObject.getId());
         disciplineRepository.save(discipline);
     }
 

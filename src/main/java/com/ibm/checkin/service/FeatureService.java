@@ -4,6 +4,7 @@ import com.ibm.checkin.entity.Classroom;
 import com.ibm.checkin.entity.Feature;
 import com.ibm.checkin.repository.ClassroomRepository;
 import com.ibm.checkin.repository.FeatureRepository;
+import com.ibm.checkin.request.FeatureRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,22 +31,39 @@ public class FeatureService {
         return featureRepository.getFeaturesByName(name);
     }
 
-    public void addFeature(Feature feature, Long classroom_id) {
-        if (!classroomRepository.existsById(classroom_id))
-            throw new IllegalStateException("Classroom with id " + classroom_id + " doesn't exist");
-        Classroom classroom = classroomRepository.getById(classroom_id);
-        feature.setClassroom(classroom);
+    public List<Classroom> getFeaturesByClassroomId(Long classroomId) {
+        return featureRepository.getFeaturesByClassroomId(classroomId);
+    }
+
+    public void updateClassroomId(Long featureId, Long classroomId) {
+        if (!featureRepository.existsById(featureId))
+            throw new IllegalStateException("Feature with id " + featureId + " doesn't exist");
+        if (!classroomRepository.existsById(classroomId))
+            throw new IllegalStateException("Classroom with id " + classroomId + " doesn't exist");
+        Feature feature = featureRepository.getById(featureId);
+        feature.setClassroom(classroomRepository.getById(classroomId));
         featureRepository.save(feature);
     }
 
-    public void setClassroomId(Long feature_id, Long classroom_id) {
-        if (!featureRepository.existsById(feature_id))
-            throw new IllegalStateException("Feature with id " + feature_id + " doesn't exist");
-        if (!classroomRepository.existsById(classroom_id))
-            throw new IllegalStateException("Classroom with id " + classroom_id + " doesn't exist");
-        Classroom classroom = classroomRepository.getById(classroom_id);
-        Feature feature = featureRepository.getById(feature_id);
-        feature.setClassroom(classroom);
+    public void addFeature(FeatureRequest featureRequest) {
+        Long classroomId = featureRequest.getClassroomId();
+        if (!classroomRepository.existsById(classroomId))
+            throw new IllegalStateException("Classroom with id " + classroomId + " doesn't exist");
+        Feature feature = new Feature(
+                classroomRepository.getById(classroomId),
+                featureRequest.getName()
+        );
+
+        for (Feature featureObject:featureRepository.getFeaturesByName(feature.getName()))
+                if(featureObject.getClassroom().equals(feature.getClassroom()))
+                    throw new IllegalStateException("Feature already added to classroom with id " + feature.getClassroom().getId());
+
         featureRepository.save(feature);
+    }
+
+    public void deteleFeatureById(Long featureId) {
+        if (!featureRepository.existsById(featureId))
+            throw new IllegalStateException("Feature with id " + featureId + " doesn't exist");
+        featureRepository.deleteById(featureId);
     }
 }

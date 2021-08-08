@@ -11,22 +11,23 @@ import java.util.List;
 @Configuration
 public class DataConfig {
 
-    final UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    final DisciplineRepository disciplineRepository;
+    private final DisciplineRepository disciplineRepository;
 
-    final ClassroomRepository classroomRepository;
+    private final ClassroomRepository classroomRepository;
 
-    final ScheduleRepository scheduleRepository;
+    private final ScheduleRepository scheduleRepository;
 
-    final AllocationRepository allocationRepository;
+    private final FeatureRepository featureRepository;
 
-    public DataConfig(DisciplineRepository disciplineRepository, UserRepository userRepository, ClassroomRepository classroomRepository, ScheduleRepository scheduleRepository, AllocationRepository allocationRepository) {
+
+    public DataConfig(DisciplineRepository disciplineRepository, UserRepository userRepository, ClassroomRepository classroomRepository, ScheduleRepository scheduleRepository, FeatureRepository featureRepository) {
         this.disciplineRepository = disciplineRepository;
         this.userRepository = userRepository;
         this.classroomRepository = classroomRepository;
         this.scheduleRepository = scheduleRepository;
-        this.allocationRepository = allocationRepository;
+        this.featureRepository = featureRepository;
     }
 
     @Bean
@@ -54,6 +55,8 @@ public class DataConfig {
                 5
         );
 
+        System.out.println(programming.getTimetable());
+
         Discipline database =  new Discipline(
                 "database",
                 "FMI",
@@ -64,13 +67,6 @@ public class DataConfig {
         );
 
         disciplineRepository.saveAll(List.of(programming, database));
-
-        Schedule schedule = new Schedule(
-                LocalDateTime.of(2021,10,13, 12, 0),
-                database
-        );
-
-        scheduleRepository.save(schedule);
 
         Classroom class1 = new Classroom(
                 101,
@@ -84,12 +80,21 @@ public class DataConfig {
 
         classroomRepository.saveAll(List.of(class1, class2));
 
-        Allocation allocation1 = new Allocation(
-                class1.getId(),
-                database.getId()
+        Feature videoProjector = new Feature(
+                class1,
+                "video projector"
         );
 
-        allocationRepository.save(allocation1);
+        featureRepository.save(videoProjector);
+
+        Schedule schedule = new Schedule(
+                programming,
+                class1,
+                LocalDateTime.of(2021,10,13, 12, 0),
+                LocalDateTime.of(2021,10,13, 13, 30)
+        );
+
+        scheduleRepository.save(schedule);
 
     }
 }

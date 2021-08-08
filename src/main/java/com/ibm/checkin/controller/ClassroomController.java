@@ -28,12 +28,12 @@ public class ClassroomController {
         return classroomService.findByID(id);
     }
 
-    @PostMapping("/add")
+    @PostMapping()
     public void addClassroom(@RequestBody Classroom classroom){
         classroomService.addClassroom(classroom);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/id/{id}")
     public void deleteClassroom(@PathVariable("id") Long id){
         classroomService.deleteClassroom(id);
     }

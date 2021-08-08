@@ -1,6 +1,7 @@
 package com.ibm.checkin.controller;
 
 import com.ibm.checkin.entity.Schedule;
+import com.ibm.checkin.request.ScheduleRequest;
 import com.ibm.checkin.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +24,9 @@ public class ScheduleController {
         return scheduleService.getSchedule();
     }
 
-    @PostMapping("/discipline/{discipline_id}")
-    public void addSchedule(@RequestBody Schedule schedule,
-                            @PathVariable(name = "discipline_id") Long discipline_id){
-        scheduleService.addSchedule(schedule,discipline_id);
+    @PostMapping
+    public void addSchedule(@RequestBody ScheduleRequest scheduleRequest){
+        scheduleService.addSchedule(scheduleRequest);
     }
 
     @PutMapping("/id/{schedule_id}/discipline/{discipline_id}")
