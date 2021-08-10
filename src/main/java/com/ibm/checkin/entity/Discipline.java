@@ -1,12 +1,15 @@
 package com.ibm.checkin.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Table(name = "disciplines")
-@Entity
+@Entity(name = "disciplines")
 public class Discipline {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,15 +28,16 @@ public class Discipline {
     private int semester;
     @Column(nullable = false)
     private int credits;
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @OneToMany(mappedBy = "discipline")
     private List<Schedule> timetable;
 
     public Discipline() {
     }
 
-    public Discipline(String name, String faculty, String section, int year, int semester, int credits) {
+    public Discipline(String name, Long teacherId, String faculty, String section, int year, int semester, int credits) {
         this.name = name;
+        this.teacherId = teacherId;
         this.faculty = faculty;
         this.section = section;
         this.year = year;

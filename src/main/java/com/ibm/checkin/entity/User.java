@@ -3,7 +3,7 @@ package com.ibm.checkin.entity;
 import javax.persistence.*;
 
 @Table(name = "users")
-@Entity
+@Entity(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,8 +14,6 @@ public class User {
     private String lastName;
     @Column(nullable = false)
     private Role role;
-    @Transient
-    private String username;
     @Column
     private int year;
     @Column
@@ -98,14 +96,6 @@ public class User {
         this.group = group;
     }
 
-    public String getUsername() {
-        return getFirstName().toLowerCase()+ "." + getLastName().toLowerCase();
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     @Override
     public String toString() {
         return "User{" +
@@ -113,7 +103,6 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", role=" + role +
-                ", username='" + username + '\'' +
                 ", year=" + year +
                 ", faculty='" + faculty + '\'' +
                 ", section='" + section + '\'' +

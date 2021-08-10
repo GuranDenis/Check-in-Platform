@@ -1,10 +1,12 @@
 package com.ibm.checkin.controller;
 
 import com.ibm.checkin.entity.Discipline;
+import com.ibm.checkin.repository.DisciplineRepository;
 import com.ibm.checkin.service.DisciplineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -28,7 +30,13 @@ public class DisciplineController {
         return disciplineService.findByID(id);
     }
 
-    @PostMapping(consumes = {"application/json"})
+    @GetMapping("/timetable")
+    @Transactional
+    public List<DisciplineRepository.DisciplineDTO> getDisciplinesDTO(){
+        return disciplineService.getDisciplinesDTO();
+    }
+
+    @PostMapping()
     public void addDiscipline(@RequestBody Discipline discipline){
         disciplineService.addDiscipline(discipline);
     }

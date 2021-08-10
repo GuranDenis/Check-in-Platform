@@ -30,28 +30,35 @@ public class ScheduleService {
 
     public void addSchedule(ScheduleRequest scheduleRequest) {
         Long disciplineId = scheduleRequest.getDisciplineId();
-        Long classroomId = scheduleRequest.getDisciplineId();
+        Long classroomId = scheduleRequest.getClassroomId();
         if (!disciplineRepository.existsById(disciplineId))
             throw new IllegalStateException("Discipline with id " + disciplineId + " doesn't exist");
         if (!disciplineRepository.existsById(classroomId))
             throw new IllegalStateException("Classroom with id " + classroomId + " doesn't exist");
+
         Schedule schedule = new Schedule(
                 disciplineRepository.getById(disciplineId),
                 classroomRepository.getById(classroomId),
-                scheduleRequest.getStartTime(),
-                scheduleRequest.getEndTime()
+                scheduleRequest.getStartTime()
         );
         scheduleRepository.save(schedule);
     }
 
-    public void setDisciplineId(Long schedule_id, Long discipline_id) {
-        if (!scheduleRepository.existsById(schedule_id))
-            throw new IllegalStateException("Schedule with id " + schedule_id + " doesn't exist");
-        if (!disciplineRepository.existsById(discipline_id))
-            throw new IllegalStateException("Discipline with id " + discipline_id + " doesn't exist");
-        Schedule schedule = scheduleRepository.getById(schedule_id);
-        Discipline discipline = disciplineRepository.getById(discipline_id);
+    public void setDisciplineId(Long scheduleId, Long disciplineId) {
+        if (!scheduleRepository.existsById(scheduleId))
+            throw new IllegalStateException("Schedule with id " + scheduleId + " doesn't exist");
+        if (!disciplineRepository.existsById(disciplineId))
+            throw new IllegalStateException("Discipline with id " + disciplineId + " doesn't exist");
+        Schedule schedule = scheduleRepository.getById(scheduleId);
+        Discipline discipline = disciplineRepository.getById(disciplineId);
         schedule.setDiscipline(discipline);
         scheduleRepository.save(schedule);
+    }
+
+    public List<Schedule> getScheduleByDisciplineId(Long disciplineId) {
+        if (!disciplineRepository.existsById(disciplineId))
+            throw new IllegalStateException("Discipline with id " + disciplineId + " doesn't exist");
+        return scheduleRepository.getScheduleByDisciplineId(disciplineId);
+
     }
 }

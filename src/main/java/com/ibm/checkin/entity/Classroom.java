@@ -1,24 +1,22 @@
 package com.ibm.checkin.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Table(name = "classrooms")
-@Entity
+@Entity(name = "classrooms")
 public class Classroom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
     private int location;
-    @Column(nullable = false)
     private int capacity;
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @OneToMany(mappedBy = "classroom")
     private List<Schedule> scheduleList;
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @OneToMany(mappedBy = "classroom")
     private List<Feature> features;
 

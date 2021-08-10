@@ -39,7 +39,7 @@ public class DisciplineService {
                     disciplineObject.getSection().equals(discipline.getSection()) &&
                         disciplineObject.getSemester() == discipline.getSemester() &&
                             disciplineObject.getYear() == discipline.getYear())
-                throw new IllegalStateException("Discipline already created with id "+ disciplineObject.getId());
+                throw new IllegalStateException("Discipline " + discipline.getName() + " already created with id "+ disciplineObject.getId());
         disciplineRepository.save(discipline);
     }
 
@@ -60,5 +60,9 @@ public class DisciplineService {
         Discipline discipline = disciplineRepository.getById(discipline_id);
         discipline.setTeacherId(teacher_id);
         disciplineRepository.save(discipline);
+    }
+
+    public List<DisciplineRepository.DisciplineDTO> getDisciplinesDTO() {
+        return disciplineRepository.getDisciplinesDTO();
     }
 }

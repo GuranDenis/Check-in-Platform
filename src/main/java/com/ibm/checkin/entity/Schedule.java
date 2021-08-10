@@ -4,9 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
-
+@Table(name = "schedule")
 @Entity(name = "schedule")
 public class Schedule {
     @Id
@@ -22,17 +21,14 @@ public class Schedule {
     private Classroom classroom;
     @Column(nullable = false)
     private LocalDateTime startTime;
-    @Column(nullable = false)
-    private LocalDateTime endTime;
 
     public Schedule() {
     }
 
-    public Schedule(Discipline discipline, Classroom classroom, LocalDateTime startTime, LocalDateTime endTime) {
+    public Schedule(Discipline discipline, Classroom classroom, LocalDateTime startTime) {
         this.discipline = discipline;
         this.classroom = classroom;
         this.startTime = startTime;
-        this.endTime = endTime;
     }
 
     public LocalDateTime getStartTime() {
@@ -67,14 +63,6 @@ public class Schedule {
         this.classroom = classroom;
     }
 
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
     @Override
     public String toString() {
         return "Schedule{" +
@@ -82,7 +70,6 @@ public class Schedule {
                 ", discipline=" + discipline +
                 ", classroom=" + classroom +
                 ", startTime=" + startTime +
-                ", endTime=" + endTime +
                 '}';
     }
 }

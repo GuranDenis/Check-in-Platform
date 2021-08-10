@@ -27,11 +27,13 @@ public class FeatureService {
         return featureRepository.findAll();
     }
 
-    public List<Feature> getFeaturesByName(String name) {
-        return featureRepository.getFeaturesByName(name);
+    public List<Feature> getFeatureByName(String name) {
+        return featureRepository.getFeatureByName(name);
     }
 
     public List<Classroom> getFeaturesByClassroomId(Long classroomId) {
+        if (!classroomRepository.existsById(classroomId))
+            throw new IllegalStateException("Classroom with id " + classroomId + " doesn't exist");
         return featureRepository.getFeaturesByClassroomId(classroomId);
     }
 
@@ -54,9 +56,9 @@ public class FeatureService {
                 featureRequest.getName()
         );
 
-        for (Feature featureObject:featureRepository.getFeaturesByName(feature.getName()))
+        for (Feature featureObject:featureRepository.getFeatureByName(feature.getName()))
                 if(featureObject.getClassroom().equals(feature.getClassroom()))
-                    throw new IllegalStateException("Feature already added to classroom with id " + feature.getClassroom().getId());
+                    throw new IllegalStateException("Feature " + featureRequest.getName() + " already added to classroom with id " + feature.getClassroom().getId());
 
         featureRepository.save(feature);
     }

@@ -19,9 +19,14 @@ public class ScheduleController {
         this.scheduleService = scheduleService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Schedule> getSchedule(){
         return scheduleService.getSchedule();
+    }
+
+    @GetMapping("/discipline/{discipline_id}")
+    public List<Schedule> getScheduleByDisciplineId(@PathVariable("discipline_id") Long disciplineId){
+        return scheduleService.getScheduleByDisciplineId(disciplineId);
     }
 
     @PostMapping
@@ -31,8 +36,8 @@ public class ScheduleController {
 
     @PutMapping("/id/{schedule_id}/discipline/{discipline_id}")
     public void setDisciplineId(
-            @PathVariable("schedule_id") Long schedule_id,
-            @PathVariable("discipline_id") Long discipline_id){
-        scheduleService.setDisciplineId(schedule_id, discipline_id);
+            @PathVariable("schedule_id") Long scheduleId,
+            @PathVariable("discipline_id") Long disciplineId){
+        scheduleService.setDisciplineId(scheduleId, disciplineId);
     }
 }

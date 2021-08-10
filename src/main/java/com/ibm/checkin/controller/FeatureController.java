@@ -26,8 +26,8 @@ public class FeatureController {
     }
 
     @GetMapping("/name/{name}")
-    public List<Feature> getFeaturesByName(@PathVariable(name = "name") String name){
-        return featureService.getFeaturesByName(name);
+    public List<Feature> getFeatureByName(@PathVariable(name = "name") String name){
+        return featureService.getFeatureByName(name);
     }
 
     @GetMapping("classroom/{classroom_id}")

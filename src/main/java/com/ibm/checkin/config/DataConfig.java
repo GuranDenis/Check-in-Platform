@@ -21,13 +21,16 @@ public class DataConfig {
 
     private final FeatureRepository featureRepository;
 
+    private final ReservationRepository reservationRepository;
 
-    public DataConfig(DisciplineRepository disciplineRepository, UserRepository userRepository, ClassroomRepository classroomRepository, ScheduleRepository scheduleRepository, FeatureRepository featureRepository) {
+
+    public DataConfig(DisciplineRepository disciplineRepository, UserRepository userRepository, ClassroomRepository classroomRepository, ScheduleRepository scheduleRepository, FeatureRepository featureRepository, ReservationRepository reservationRepository) {
         this.disciplineRepository = disciplineRepository;
         this.userRepository = userRepository;
         this.classroomRepository = classroomRepository;
         this.scheduleRepository = scheduleRepository;
         this.featureRepository = featureRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     @Bean
@@ -44,10 +47,23 @@ public class DataConfig {
                 Role.student
         );
 
-        userRepository.saveAll(List.of(mircea, denis));
+        User prof1 = new User(
+                "Joe",
+                "Dylan",
+                Role.teacher
+        );
+
+        User prof2 = new User(
+                "Mike",
+                "Abraham",
+                Role.teacher
+        );
+
+        userRepository.saveAll(List.of(mircea, denis, prof1, prof2));
 
         Discipline programming =  new Discipline(
                 "programming",
+                4L,
                 "FMI",
                 "IE",
                 2,
@@ -55,10 +71,9 @@ public class DataConfig {
                 5
         );
 
-        System.out.println(programming.getTimetable());
-
         Discipline database =  new Discipline(
                 "database",
+                3L,
                 "FMI",
                 "IE",
                 2,
@@ -87,14 +102,35 @@ public class DataConfig {
 
         featureRepository.save(videoProjector);
 
-        Schedule schedule = new Schedule(
+        Schedule schedule1 = new Schedule(
                 programming,
-                class1,
-                LocalDateTime.of(2021,10,13, 12, 0),
-                LocalDateTime.of(2021,10,13, 13, 30)
+                class2,
+                LocalDateTime.of(2021,10,13, 13, 0)
         );
 
-        scheduleRepository.save(schedule);
+        Schedule schedule2 = new Schedule(
+                database,
+                class1,
+                LocalDateTime.of(2021,10,14, 13, 0)
+        );
 
+        scheduleRepository.saveAll(List.of(schedule1, schedule2));
+
+        Reservation reservation1 = new Reservation(
+                1L,
+                1L
+        );
+
+        Reservation reservation2 = new Reservation(
+                1L,
+                2L
+        );
+
+        Reservation reservation3 = new Reservation(
+                2L,
+                2L
+        );
+
+        reservationRepository.saveAll(List.of(reservation1,reservation2, reservation3));
     }
 }
