@@ -16,7 +16,7 @@ public interface DisciplineRepository extends JpaRepository<Discipline, Long> {
             "FROM schedule as S INNER JOIN classrooms as CL ON CL.id = S.classroom.id " +
             "INNER JOIN disciplines as D ON D.id = S.discipline.id " +
             "INNER JOIN users U ON D.teacherId = U.id " +
-            "LEFT JOIN reservations R ON S.id = R.scheduleId GROUP BY S.id")
+            "LEFT JOIN reservations R ON S.id = R.scheduleId GROUP BY S.startTime")
     List<DisciplineDTO> getDisciplinesDTO();
 
     interface DisciplineDTO {

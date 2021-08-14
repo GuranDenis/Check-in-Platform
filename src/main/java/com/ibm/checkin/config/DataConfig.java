@@ -62,7 +62,7 @@ public class DataConfig {
         userRepository.saveAll(List.of(mircea, denis, prof1, prof2));
 
         Discipline programming =  new Discipline(
-                "programming",
+                "Programming",
                 4L,
                 "FMI",
                 "IE",
@@ -72,7 +72,7 @@ public class DataConfig {
         );
 
         Discipline database =  new Discipline(
-                "database",
+                "Database",
                 3L,
                 "FMI",
                 "IE",
@@ -111,10 +111,16 @@ public class DataConfig {
         Schedule schedule2 = new Schedule(
                 database,
                 class1,
-                LocalDateTime.of(2021,10,14, 13, 0)
+                LocalDateTime.of(2021,10,13, 14, 40)
         );
 
-        scheduleRepository.saveAll(List.of(schedule1, schedule2));
+        Schedule schedule3 = new Schedule(
+                programming,
+                class1,
+                LocalDateTime.of(2021,10,15, 13, 0)
+        );
+
+        scheduleRepository.saveAll(List.of(schedule3, schedule2, schedule1));
 
         Reservation reservation1 = new Reservation(
                 1L,

@@ -6,7 +6,6 @@ import com.ibm.checkin.service.DisciplineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -30,8 +29,7 @@ public class DisciplineController {
         return disciplineService.findByID(id);
     }
 
-    @GetMapping("/timetable")
-    @Transactional
+    @GetMapping("/dto")
     public List<DisciplineRepository.DisciplineDTO> getDisciplinesDTO(){
         return disciplineService.getDisciplinesDTO();
     }
