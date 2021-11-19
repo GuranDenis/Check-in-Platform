@@ -7,6 +7,7 @@ import com.ibm.checkin.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -64,5 +65,9 @@ public class DisciplineService {
 
     public List<DisciplineRepository.DisciplineDTO> getDisciplinesDTO() {
         return disciplineRepository.getDisciplinesDTO();
+    }
+
+    public List<DisciplineRepository.DisciplineDTO> getDisciplinesDTOByDay(String day) {
+        return disciplineRepository.getDisciplinesDTOByDay(day);
     }
 }

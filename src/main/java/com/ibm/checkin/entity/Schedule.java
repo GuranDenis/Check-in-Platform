@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Table(name = "schedule")
 @Entity(name = "schedule")
@@ -21,6 +22,8 @@ public class Schedule {
     private Classroom classroom;
     @Column(nullable = false)
     private LocalDateTime startTime;
+    @Column(nullable = false)
+    private String startDay;
 
     public Schedule() {
     }
@@ -29,6 +32,7 @@ public class Schedule {
         this.discipline = discipline;
         this.classroom = classroom;
         this.startTime = startTime;
+        this.startDay = startTime.format(DateTimeFormatter.ofPattern("EEE"));
     }
 
     public LocalDateTime getStartTime() {
@@ -71,5 +75,13 @@ public class Schedule {
                 ", classroom=" + classroom +
                 ", startTime=" + startTime +
                 '}';
+    }
+
+    public String getStartDay() {
+        return startDay;
+    }
+
+    public void setStartDay(String startDay) {
+        this.startDay = startDay;
     }
 }
