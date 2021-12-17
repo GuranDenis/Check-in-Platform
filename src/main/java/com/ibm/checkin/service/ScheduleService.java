@@ -61,4 +61,8 @@ public class ScheduleService {
         return scheduleRepository.getScheduleByDisciplineId(disciplineId);
 
     }
+
+    public void deleteSchedule(Long id) {
+        scheduleRepository.deleteById(id);
+    }
 }

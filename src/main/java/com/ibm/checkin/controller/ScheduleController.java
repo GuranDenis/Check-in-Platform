@@ -40,4 +40,9 @@ public class ScheduleController {
             @PathVariable("discipline_id") Long disciplineId){
         scheduleService.setDisciplineId(scheduleId, disciplineId);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteSchedule(@PathVariable("id") Long id){
+        scheduleService.deleteSchedule(id);
+    }
 }
