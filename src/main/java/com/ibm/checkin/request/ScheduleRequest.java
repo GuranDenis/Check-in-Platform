@@ -7,16 +7,14 @@ public class ScheduleRequest {
     private Long disciplineId;
     private Long classroomId;
     private LocalDateTime startTime;
-    private LocalDateTime endTime;
 
     public ScheduleRequest() {
     }
 
-    public ScheduleRequest(Long disciplineId, Long classroomId, LocalDateTime startTime, LocalDateTime endTime) {
+    public ScheduleRequest(Long disciplineId, Long classroomId, LocalDateTime startTime) {
         this.disciplineId = disciplineId;
         this.classroomId = classroomId;
         this.startTime = startTime;
-        this.endTime = endTime;
     }
 
     public Long getDisciplineId() {
@@ -43,11 +41,4 @@ public class ScheduleRequest {
         this.startTime = startTime;
     }
 
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
 }

@@ -1,5 +1,6 @@
 package com.ibm.checkin.repository;
 
+import com.ibm.checkin.dto.ClassroomInfo;
 import com.ibm.checkin.entity.Classroom;
 import org.springframework.data.jpa.repository.JpaRepository;
 

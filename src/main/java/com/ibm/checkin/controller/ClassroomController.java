@@ -1,5 +1,6 @@
 package com.ibm.checkin.controller;
 
+import com.ibm.checkin.dto.ClassroomInfo;
 import com.ibm.checkin.entity.Classroom;
 import com.ibm.checkin.service.ClassroomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,11 @@ public class ClassroomController {
     @GetMapping("/all")
     public List<Classroom> getClassrooms(){
         return classroomService.getClassrooms();
+    }
+
+    @GetMapping("/locations")
+    public List<ClassroomInfo> getClassroomInfo(){
+        return classroomService.getClassroomInfo();
     }
 
     @GetMapping("/id/{id}")

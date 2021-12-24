@@ -1,5 +1,6 @@
 package com.ibm.checkin.service;
 
+import com.ibm.checkin.dto.DisciplineInfo;
 import com.ibm.checkin.entity.Discipline;
 import com.ibm.checkin.entity.Role;
 import com.ibm.checkin.repository.DisciplineRepository;
@@ -7,7 +8,7 @@ import com.ibm.checkin.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,7 +35,6 @@ public class DisciplineService {
     }
 
     public void addDiscipline(Discipline discipline) {
-
         for (Discipline disciplineObject: disciplineRepository.getDisciplinesByName(discipline.getName()))
             if(disciplineObject.getFaculty().equals(discipline.getFaculty()) &&
                     disciplineObject.getSection().equals(discipline.getSection()) &&
@@ -69,5 +69,13 @@ public class DisciplineService {
 
     public List<DisciplineRepository.DisciplineDTO> getDisciplinesDTOByDay(String day) {
         return disciplineRepository.getDisciplinesDTOByDay(day);
+    }
+
+    public List<DisciplineInfo> getDisciplineInfo() {
+        List<Discipline> disciplines = disciplineRepository.findAll();
+        List<DisciplineInfo> names = new ArrayList<>();
+        for(Discipline discipline : disciplines)
+            names.add(new DisciplineInfo(discipline.getId(), discipline.getName()));
+        return names;
     }
 }

@@ -1,5 +1,6 @@
 package com.ibm.checkin.controller;
 
+import com.ibm.checkin.dto.DisciplineInfo;
 import com.ibm.checkin.entity.Discipline;
 import com.ibm.checkin.repository.DisciplineRepository;
 import com.ibm.checkin.service.DisciplineService;
@@ -25,6 +26,11 @@ public class DisciplineController {
     @GetMapping("/all")
     public List<Discipline> getDisciplines(){
         return disciplineService.getDisciplines();
+    }
+
+    @GetMapping("/names")
+    public List<DisciplineInfo> getDisciplineInfo(){
+        return disciplineService.getDisciplineInfo();
     }
 
     @GetMapping("/id/{id}")

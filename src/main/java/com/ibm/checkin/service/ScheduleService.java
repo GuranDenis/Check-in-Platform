@@ -9,6 +9,7 @@ import com.ibm.checkin.request.ScheduleRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -35,6 +36,15 @@ public class ScheduleService {
             throw new IllegalStateException("Discipline with id " + disciplineId + " doesn't exist");
         if (!disciplineRepository.existsById(classroomId))
             throw new IllegalStateException("Classroom with id " + classroomId + " doesn't exist");
+        LocalDateTime startTime = scheduleRequest.getStartTime();
+        List<Schedule> schedules = getSchedule();
+        for(Schedule schedule : schedules)
+            if(schedule.getDiscipline().getId().equals(disciplineId) &&
+                schedule.getClassroom().getId().equals(classroomId) &&
+                schedule.getStartTime().getDayOfWeek().equals(startTime.getDayOfWeek()) &&
+                schedule.getStartTime().getHour() == startTime.getHour() &&
+                schedule.getStartTime().getMinute() == startTime.getMinute())
+                throw new IllegalStateException("Schedule already created");
 
         Schedule schedule = new Schedule(
                 disciplineRepository.getById(disciplineId),

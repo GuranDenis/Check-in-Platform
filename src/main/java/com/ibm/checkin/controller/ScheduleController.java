@@ -6,7 +6,6 @@ import com.ibm.checkin.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -41,7 +40,7 @@ public class ScheduleController {
         scheduleService.setDisciplineId(scheduleId, disciplineId);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/id/{id}")
     public void deleteSchedule(@PathVariable("id") Long id){
         scheduleService.deleteSchedule(id);
     }
