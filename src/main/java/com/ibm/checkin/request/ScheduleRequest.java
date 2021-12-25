@@ -1,20 +1,23 @@
 package com.ibm.checkin.request;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class ScheduleRequest {
 
     private Long disciplineId;
     private Long classroomId;
-    private LocalDateTime startTime;
+    private LocalDate day;
+    private LocalTime time;
+    LocalDateTime startTime;
 
-    public ScheduleRequest() {
-    }
-
-    public ScheduleRequest(Long disciplineId, Long classroomId, LocalDateTime startTime) {
+    public ScheduleRequest(Long disciplineId, Long classroomId, LocalDate day, LocalTime time) {
         this.disciplineId = disciplineId;
         this.classroomId = classroomId;
-        this.startTime = startTime;
+        this.day = day;
+        this.time = time;
+        this.startTime = LocalDateTime.of(day.getYear(),day.getMonth(),day.getDayOfMonth(),time.getHour(),time.getMinute());
     }
 
     public Long getDisciplineId() {
@@ -33,12 +36,19 @@ public class ScheduleRequest {
         this.classroomId = classroomId;
     }
 
-    public LocalDateTime getStartTime() {
-        return startTime;
+    public LocalDate getDay() {
+        return day;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
+    public void setDay(LocalDate day) {
+        this.day = day;
     }
 
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
+    }
 }

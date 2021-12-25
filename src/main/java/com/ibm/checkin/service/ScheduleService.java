@@ -9,7 +9,9 @@ import com.ibm.checkin.request.ScheduleRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -32,11 +34,13 @@ public class ScheduleService {
     public void addSchedule(ScheduleRequest scheduleRequest) {
         Long disciplineId = scheduleRequest.getDisciplineId();
         Long classroomId = scheduleRequest.getClassroomId();
+        LocalDate day = scheduleRequest.getDay();
+        LocalTime time = scheduleRequest.getTime();
+        LocalDateTime startTime = LocalDateTime.of(day.getYear(),day.getMonth(),day.getDayOfMonth(),time.getHour(),time.getMinute());
         if (!disciplineRepository.existsById(disciplineId))
             throw new IllegalStateException("Discipline with id " + disciplineId + " doesn't exist");
         if (!disciplineRepository.existsById(classroomId))
             throw new IllegalStateException("Classroom with id " + classroomId + " doesn't exist");
-        LocalDateTime startTime = scheduleRequest.getStartTime();
         List<Schedule> schedules = getSchedule();
         for(Schedule schedule : schedules)
             if(schedule.getDiscipline().getId().equals(disciplineId) &&
@@ -49,7 +53,7 @@ public class ScheduleService {
         Schedule schedule = new Schedule(
                 disciplineRepository.getById(disciplineId),
                 classroomRepository.getById(classroomId),
-                scheduleRequest.getStartTime()
+                startTime
         );
         scheduleRepository.save(schedule);
     }
