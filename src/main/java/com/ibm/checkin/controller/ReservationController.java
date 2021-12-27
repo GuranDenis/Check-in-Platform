@@ -28,9 +28,14 @@ public class ReservationController {
         return reservationService.getReservationByStudentId(studentId);
     }
 
-    @GetMapping("/schedule/{schedule_id")
+    @GetMapping("/schedule/{schedule_id}")
     public List<Reservation> getReservationsByScheduleId(@PathVariable("schedule_id") Long scheduleId){
         return reservationService.getReservationByScheduleId(scheduleId);
+    }
+
+    @GetMapping("/student/{student_id}/schedule/{schedule_id}")
+    public Reservation getReservationByStudentIdAndScheduleId(@PathVariable("student_id") Long studentId, @PathVariable("schedule_id") Long scheduleId){
+        return reservationService.getReservationByStudentIdAndScheduleId(studentId, scheduleId);
     }
 
     @GetMapping("/id/{id}")
@@ -46,6 +51,11 @@ public class ReservationController {
     @DeleteMapping("/{id}")
     public void deleteReservationById(@PathVariable("id") Long id){
         reservationService.deleteReservationById(id);
+    }
+
+    @DeleteMapping("/student/{student_id}/schedule/{schedule_id}")
+    public void deleteReservation(@PathVariable("student_id") Long studentId, @PathVariable("schedule_id") Long scheduleId){
+        reservationService.deleteReservation(studentId, scheduleId);
     }
 
 }

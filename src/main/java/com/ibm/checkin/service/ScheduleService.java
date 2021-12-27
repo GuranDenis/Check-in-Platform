@@ -1,17 +1,17 @@
 package com.ibm.checkin.service;
 
+import com.ibm.checkin.entity.Classroom;
 import com.ibm.checkin.entity.Discipline;
 import com.ibm.checkin.entity.Schedule;
 import com.ibm.checkin.repository.ClassroomRepository;
 import com.ibm.checkin.repository.DisciplineRepository;
 import com.ibm.checkin.repository.ScheduleRepository;
 import com.ibm.checkin.request.ScheduleRequest;
+import com.ibm.checkin.request.ScheduleRequestUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -34,9 +34,7 @@ public class ScheduleService {
     public void addSchedule(ScheduleRequest scheduleRequest) {
         Long disciplineId = scheduleRequest.getDisciplineId();
         Long classroomId = scheduleRequest.getClassroomId();
-        LocalDate day = scheduleRequest.getDay();
-        LocalTime time = scheduleRequest.getTime();
-        LocalDateTime startTime = LocalDateTime.of(day.getYear(),day.getMonth(),day.getDayOfMonth(),time.getHour(),time.getMinute());
+        LocalDateTime startTime = scheduleRequest.getStartTime();
         if (!disciplineRepository.existsById(disciplineId))
             throw new IllegalStateException("Discipline with id " + disciplineId + " doesn't exist");
         if (!disciplineRepository.existsById(classroomId))
@@ -78,5 +76,25 @@ public class ScheduleService {
 
     public void deleteSchedule(Long id) {
         scheduleRepository.deleteById(id);
+    }
+
+    public void updateSchedule(ScheduleRequestUpdate scheduleRequestUpdate) {
+        Long disciplineId = scheduleRequestUpdate.getDisciplineId();
+        Long classroomId = scheduleRequestUpdate.getClassroomId();
+        LocalDateTime startTime = scheduleRequestUpdate.getStartTime();
+
+        Schedule schedule = scheduleRepository.getById(scheduleRequestUpdate.getId());
+        Discipline discipline = disciplineRepository.getById(disciplineId);
+        Classroom classroom = classroomRepository.getById(classroomId);
+
+        if(!(schedule.getDiscipline().getId().equals(disciplineId) &&
+            schedule.getClassroom().getId().equals(classroomId) &&
+            schedule.getStartTime().equals(startTime)))
+        {
+            schedule.setDiscipline(discipline);
+            schedule.setClassroom(classroom);
+            schedule.setStartTime(startTime);
+        }
+        scheduleRepository.save(schedule);
     }
 }

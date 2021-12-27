@@ -47,6 +47,10 @@ public class ReservationService {
         return reservationRepository.getReservationById(id);
     }
 
+    public Reservation getReservationByStudentIdAndScheduleId(Long studentId, Long scheduleId){
+        return reservationRepository.getReservationByStudentIdAndScheduleId(studentId, scheduleId);
+    }
+
     public List<Reservation> getReservationByStudentId(Long studentId) {
         return reservationRepository.getReservationByStudentId(studentId);
     }
@@ -59,5 +63,9 @@ public class ReservationService {
         if(!reservationRepository.existsById(id))
             throw new IllegalStateException("Reservation with id " + id + " doesn't exist");
         reservationRepository.deleteById(id);
+    }
+
+    public void deleteReservation(Long studentId, Long scheduleId) {
+        deleteReservationById(getReservationByStudentIdAndScheduleId(studentId, scheduleId).getId());
     }
 }

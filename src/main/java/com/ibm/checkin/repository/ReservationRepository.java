@@ -11,4 +11,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> getReservationByStudentId(Long studentId);
 
     List<Reservation> getReservationByScheduleId(Long scheduleId);
+
+    Reservation getReservationByStudentIdAndScheduleId(Long studentId, Long scheduleId);
 }

@@ -4,20 +4,30 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-public class ScheduleRequest {
+public class ScheduleRequestUpdate {
 
+    private Long id;
     private Long disciplineId;
     private Long classroomId;
     private LocalDate day;
     private LocalTime time;
     private LocalDateTime startTime;
 
-    public ScheduleRequest(Long disciplineId, Long classroomId, LocalDate day, LocalTime time) {
+    public ScheduleRequestUpdate(Long id, Long disciplineId, Long classroomId, LocalDate day, LocalTime time) {
+        this.id = id;
         this.disciplineId = disciplineId;
         this.classroomId = classroomId;
         this.day = day;
         this.time = time;
         this.startTime = LocalDateTime.of(day.getYear(),day.getMonth(),day.getDayOfMonth(),time.getHour(),time.getMinute());
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getDisciplineId() {

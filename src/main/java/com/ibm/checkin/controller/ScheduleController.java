@@ -2,6 +2,7 @@ package com.ibm.checkin.controller;
 
 import com.ibm.checkin.entity.Schedule;
 import com.ibm.checkin.request.ScheduleRequest;
+import com.ibm.checkin.request.ScheduleRequestUpdate;
 import com.ibm.checkin.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +39,11 @@ public class ScheduleController {
             @PathVariable("schedule_id") Long scheduleId,
             @PathVariable("discipline_id") Long disciplineId){
         scheduleService.setDisciplineId(scheduleId, disciplineId);
+    }
+
+    @PutMapping
+    public void updateSchedule(@RequestBody ScheduleRequestUpdate scheduleRequestUpdate){
+        scheduleService.updateSchedule(scheduleRequestUpdate);
     }
 
     @DeleteMapping("/id/{id}")

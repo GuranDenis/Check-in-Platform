@@ -41,9 +41,9 @@ public class DataConfig {
                 Role.admin
         );
 
-        User denis = new User(
-                "Denis",
-                "Guran",
+        User john = new User(
+                "John",
+                "Doe",
                 Role.student
         );
 
@@ -59,7 +59,7 @@ public class DataConfig {
                 Role.teacher
         );
 
-        userRepository.saveAll(List.of(mircea, denis, prof1, prof2));
+        userRepository.saveAll(List.of(mircea, john, prof1, prof2));
 
         Discipline programming =  new Discipline(
                 "Programming",
